@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Terminal</title>
+    <style>
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px #00ff00; }
+            20% { text-shadow: -2px -2px #00ff00; }
+            40% { text-shadow: 2px -2px #00ff00; }
+            60% { text-shadow: -2px 2px #00ff00; }
+            80% { text-shadow: 2px 2px #00ff00; }
+            100% { text-shadow: -2px -2px #00ff00; }
+        }
+
+        body {
+            background-color: black;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            padding-top: 10%;
+        }
+
+        h1 {
+            animation: glitch 0.5s infinite alternate;
+        }
+
+        input {
+            background: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            font-size: 18px;
+            width: 80%;
+            max-width: 300px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        button {
+            background: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+
+        button:hover {
+            background: #00ff00;
+            color: black;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔓 Access Terminal</h1>
+    <form method="POST">
+        <input type="text" name="username" placeholder="Enter Username" required><br>
+        <input type="password" name="password" placeholder="Enter Password" required><br>
+        <button type="submit">Login</button>
+    </form>
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+</body>
+</html>

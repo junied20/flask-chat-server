@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Terminal Chat</title>
+    <style>
+        @keyframes typing {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        body {
+            background-color: black;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+        }
+
+        h1 {
+            animation: typing 1s infinite;
+        }
+
+        #chat {
+            width: 80%;
+            height: 400px;
+            overflow-y: scroll;
+            margin: 20px auto;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            text-align: left;
+        }
+
+        input {
+            background: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+        }
+
+        button {
+            background: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #00ff00;
+            color: black;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
+</head>
+<body>
+    <h1>👾 Welcome, {{ username }}</h1>
+    <div id="chat"></div>
+    <input type="text" id="message" placeholder="Type your message..." autofocus>
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        var socket = io.connect(window.location.origin);
+        var chat = document.getElementById("chat");
+
+        socket.on("message", function(msg) {
+            chat.innerHTML += "<p>🟢 " + msg + "</p>";
+            chat.scrollTop = chat.scrollHeight;
+        });
+
+        function sendMessage() {
+            var message = document.getElementById("message").value;
+            if (message.trim() !== "") {
+                socket.send(message);
+                document.getElementById("message").value = "";
+            }
+        }
+
+        document.getElementById("message").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
